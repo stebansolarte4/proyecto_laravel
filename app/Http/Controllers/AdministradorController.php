@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+//use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Usuario;
 
 class AdministradorController extends Controller
 {
@@ -11,7 +12,8 @@ class AdministradorController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    { $usuarios = Usuario::all();
+        return view('administradores.index', compact('usuarios'));
         //
     }
 
