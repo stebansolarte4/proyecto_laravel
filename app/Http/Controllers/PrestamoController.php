@@ -27,7 +27,7 @@ class PrestamoController extends Controller
             ->get();
     }
 
-    return view('admin.prestamos.index', compact('prestamos'));
+    return view('administradores.prestamos.index', compact('prestamos'));
     }
 
     /**
