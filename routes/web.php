@@ -1,11 +1,11 @@
 <?php
-
+ 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LibroController;
 use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AutorController;
-use Illuminate\Support\Facades\Route;
  
 Route::get('/', function () {
     return view('welcome');
@@ -41,3 +41,4 @@ Route::get('/autores/{id}/editar', [AutorController::class, 'edit'])->name('auto
 Route::delete('/autores/{id}', [AutorController::class, 'destroy'])->name('autores.destroy');
  
 require __DIR__.'/auth.php';
+ 

@@ -13,6 +13,8 @@ class Prestamo extends Model
     //2 especificamos la clave primaria
     protected $primaryKey = 'id_prestamo';
     //3 definir campos que se pueden asignar masivamente (crud)
+    public $timestamps = false;
+
     protected $fillable = ['fk_usuario','fk_libro','fecha_devolucion', 'fecha_entrega','estado'];
 
 public function usuario()

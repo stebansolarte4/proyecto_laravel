@@ -16,7 +16,7 @@ class LibroController extends Controller
     public function index()
     {
         $libros = Libro::with(['autor', 'categoria'])->get();
-        return view('admin.libros.index', compact('libros'));
+        return view('administradores.libros.index', compact('libros'));
     }
 
     /**
