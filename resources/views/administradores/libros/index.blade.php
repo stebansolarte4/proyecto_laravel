@@ -44,6 +44,8 @@
                      {{ session('success') }}
                      </div>
                     @endif
+
+                    <button type="submit" style="background:none; border:none; cursor:pointer;" onclick="return confirm('¿Salir?')">❌</button>
                     </form>
                 </td>
             </tr>

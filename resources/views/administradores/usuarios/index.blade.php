@@ -8,6 +8,12 @@
     <a href="{{ route('usuarios.create') }}" class="btn btn-add">+ Nuevo Usuario</a>
 </div>
 
+<style>
+.role-label { padding: 5px 10px; border-radius: 10px; display: inline-block; }
+.role-label-admin { background-color: #dbeafe; color: #1e40af; }
+.role-label-other { background-color: #f1f5f9; color: #475569; }
+</style>
+
 <div class="card">
     <table>
         <thead>
@@ -24,9 +30,11 @@
                 <td><strong>{{ $usuario->nombre }}</strong></td>
                 <td>{{ $usuario->correo }}</td>
                 <td>
-                    <span style="background-color: {{ $usuario->fk_rol == 1 ? '#dbeafe' : '#f1f5f9' }}; color: {{ $usuario->fk_rol == 1 ? '#1e40af' : '#475569' }}; padding: 5px 10px; border-radius: 10px;">
-                 {{ $usuario->fk_rol == 1 ? 'Administrador' : ($usuario->fk_rol == 2 ? 'Estudiante' : 'Profesor') }}
-                    </span>
+                    @php
+                        $roleClass = $usuario->fk_rol == 1 ? 'role-label-admin' : 'role-label-other';
+                        $roleText = $usuario->fk_rol == 1 ? 'Administrador' : ($usuario->fk_rol == 2 ? 'Estudiante' : 'Profesor');
+                    @endphp
+                    <span class="role-label {{ $roleClass }}">{{ $roleText }}</span>
                 </td>
                 <td>
                     <a href="{{ route('usuarios.edit', $usuario->id_usuario) }}" style="text-decoration:none; margin-right:10px;">✏️</a>

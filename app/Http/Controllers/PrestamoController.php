@@ -69,7 +69,8 @@ class PrestamoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $prestamo = Prestamo::findOrFail($id);
+        return view('admin.prestamos.show', compact('prestamo'));
     }
 
     /**
@@ -77,7 +78,8 @@ class PrestamoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $prestamo = Prestamo::findOrFail($id);
+        return view('admin.prestamos.edit', compact('prestamo'));
     }
 
     /**
@@ -85,7 +87,13 @@ class PrestamoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $prestamo = Prestamo::findOrFail($id);
+         $request->validate([
+            'fecha_entrega' => 'required|date',
+            'fecha_devolucion' => 'required|date|after:fecha_entrega',
+        ]);
+        $prestamo->update($request->all());
+        return redirect()->route('prestamos.index')->with('success', 'Préstamo actualizado correctamente.');
     }
 
     /**
@@ -93,6 +101,6 @@ class PrestamoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+       //
     }
 }
