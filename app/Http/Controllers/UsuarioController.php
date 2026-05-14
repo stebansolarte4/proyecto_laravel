@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Usuario;
+use App\Models\Rol;
 
 class UsuarioController extends Controller
 {
@@ -12,7 +14,12 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        //
+    if (Auth::user()->fk_rol != 1) {
+            return redirect()->route('libros.index')->with('error', 'No tienes permiso para ver esta sección.');
+        }
+
+        $usuarios = Usuario::with('rol')->get();
+        return view('admin.usuarios.index', compact('usuarios'));
     }
 
     /**
@@ -20,7 +27,8 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Rol::all();
+        return view('admin.usuarios.create', compact('roles'));
     }
 
     /**
@@ -28,7 +36,21 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',
+            'correo' => 'required|correo|unique:usuarios,correo',
+            'password' => 'required|min:6',
+            'fk_rol' => 'required'
+        ]);
+
+        Usuario::create([
+            'nombre' => $request->nombre,
+            'correo' => $request->correo,
+            'password' => bcrypt($request->password),
+            'fk_rol' => $request->fk_rol
+        ]);
+
+        return redirect()->route('usuarios.index')->with('success', 'Usuario creado exitosamente');
     }
 
     /**
@@ -44,7 +66,9 @@ class UsuarioController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $usuario = Usuario::findOrFail($id);
+        $roles = Rol::all();
+        return view('admin.usuarios.edit', compact('usuario', 'roles'));
     }
 
     /**
@@ -52,7 +76,15 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $usuario = Usuario::findOrFail($id);
+        $usuario->update([
+            'nombre' => $request->nombre,
+            'correo' => $request->correo,
+            'password' => bcrypt($request->password),
+            'fk_rol' => $request->fk_rol
+        ]);
+
+        return redirect()->route('usuarios.index')->with('success', 'Usuario actualizado exitosamente');
     }
 
     /**
@@ -60,6 +92,8 @@ class UsuarioController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $usuario = Usuario::findOrFail($id);
+        $usuario->delete();
+        return redirect()->route('usuarios.index')->with('success', 'Usuario eliminado exitosamente');
     }
 }

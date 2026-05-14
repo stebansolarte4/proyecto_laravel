@@ -16,5 +16,10 @@ class Administrador extends Model
     //3 definir campos que se pueden asignar masivamente (crud)
     protected $fillable = [
         'nombre','username','password','fk_rol'];
+
+        public function rol()
+    {
+        return $this->belongsTo(Rol::class, 'fk_rol', 'id_rol');
+    }
     
 }

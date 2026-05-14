@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Prestamo;
+use App\Models\Libro;
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 
 class PrestamoController extends Controller
@@ -12,7 +15,19 @@ class PrestamoController extends Controller
      */
     public function index()
     {
-        //
+       $user = Auth::user();
+
+    if ($user->fk_rol == 1) {
+        // El Administrador ve todos los préstamos de la biblioteca
+        $prestamos = Prestamo::with(['libro', 'usuario'])->get();
+    } else {
+        // Estudiantes (2) y Profesores (3) solo ven sus propios préstamos
+        $prestamos = Prestamo::with(['libro'])
+            ->where('fk_usuario', $user->id_usuario)
+            ->get();
+    }
+
+    return view('admin.prestamos.index', compact('prestamos'));
     }
 
     /**
@@ -20,7 +35,13 @@ class PrestamoController extends Controller
      */
     public function create()
     {
-        //
+   if (Auth::user()->fk_rol != 1) {
+            return redirect()->route('prestamos.index')->with('error', 'No tienes permiso.');
+        }
+
+        $libros = Libro::where('stock', '>', 0)->get(); // Solo libros disponibles
+        $usuarios = Usuario::all();
+        return view('admin.prestamos.create', compact('libros', 'usuarios'));
     }
 
     /**
@@ -28,8 +49,20 @@ class PrestamoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       $request->validate([
+            'fk_usuario' => 'required',
+            'fk_libro' => 'required',
+            'fecha_entrega' => 'required|date',
+            'fecha_devolucion' => 'required|date|after:fecha_entrega',
+        ]);
+
+        // Crear préstamo y bajar stock
+        Prestamo::create($request->all());
+        Libro::find($request->fk_libro)->decrement('stock');
+
+        return redirect()->route('prestamos.index')->with('success', 'Préstamo registrado correctamente.');
     }
+    
 
     /**
      * Display the specified resource.

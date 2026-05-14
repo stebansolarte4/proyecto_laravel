@@ -62,6 +62,44 @@
                 </tbody>
             </table>
         </div>
+        @extends('layouts.app')
+
+@section('title', 'Inventario de Libros')
+
+@section('content')
+<div class="header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    <h1>Gestión de Libros</h1>
+    <a href="#" class="btn-primary">+ Nuevo Libro</a>
+</div>
+
+<div class="card">
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Categoría</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($libros as $libro)
+            <tr>
+                <td><strong>{{ $libro->titulo }}</strong></td>
+                <td>{{ $libro->autor->nombre_autor ?? 'N/A' }}</td>
+                <td>{{ $libro->categoria->nombre_categoria ?? 'N/A' }}</td>
+                <td>{{ $libro->stock }}</td>
+                <td>
+                    <a href="{{ route('libros.edit', $libro->id_libro) }}">✏️</a>
+                    <a href="#" style="color:red; margin-left:10px;">🗑️</a>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+@endsection
         
     </div>
     

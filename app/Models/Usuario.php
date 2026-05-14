@@ -2,16 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Usuario extends Model
+// app/Models/Usuario.php
+
+class Usuario extends Authenticatable
 {
-    use HasFactory;
-    //1 especificamos el nombre de la tabla
-    protected $table = 'usuario';
-    //2 especificamos la clave primaria
-    protected $primaryKey = 'id_usuario';
-    //3 definir campos que se pueden asignar masivamente (crud)
-    protected $fillable = ['nombre','correo','password','fk_rol'];
+    protected $table = 'usuarios'; // Asegúrate de que coincida con el nombre en tu DB
+    
+    // Si tu llave primaria se llama 'id_usuario' en la DB:
+    protected $primaryKey = 'id_usuario'; 
+
+    // IMPORTANTE: Si en tu tabla NO tienes 'created_at' y 'updated_at'
+    public $timestamps = false; 
+
+    protected $fillable = [
+        'nombre', 
+        'correo', 
+        'password', 
+        'fk_rol'
+    ];
 }

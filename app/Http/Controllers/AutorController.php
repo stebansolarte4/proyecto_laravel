@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Categoria;
+use App\Models\Autor;
 
-class CategoriaController extends Controller
+class AutorController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categorias = Categoria::all();
-        return view('admin.categorias.index', compact('categorias'));
+        $autores = Autor::all();
+    return view('admin.autores.index', compact('autores'));
     }
 
     /**

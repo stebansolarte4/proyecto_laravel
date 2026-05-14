@@ -14,4 +14,15 @@ class Prestamo extends Model
     protected $primaryKey = 'id_prestamo';
     //3 definir campos que se pueden asignar masivamente (crud)
     protected $fillable = ['fk_usuario','fk_libro','fecha_devolucion', 'fecha_entrega','estado'];
+
+public function usuario()
+    {
+        return $this->belongsTo(Usuario::class, 'fk_usuario', 'id_usuario');
+    }
+
+    // Relación: El préstamo involucra un libro
+    public function libro()
+    {
+        return $this->belongsTo(Libro::class, 'fk_libro', 'id_libro');
+    }    
 }
