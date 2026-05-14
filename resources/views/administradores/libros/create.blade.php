@@ -42,6 +42,7 @@
         </div>
 
         <button type="submit" class="btn btn-add" style="width: 100%; border: none; padding: 12px; font-size: 1rem;">Guardar en Inventario</button>
+        <button type="submit" style="background:none; border:none; cursor:pointer;" onclick="return confirm('¿Salir?')">❌</button>
     </form>
 </div>
 @endsection

@@ -12,8 +12,12 @@ class Prestamo extends Model
     protected $table = 'prestamo';
     //2 especificamos la clave primaria
     protected $primaryKey = 'id_prestamo';
+    public $incrementing = true; // Si tu clave primaria es auto-incremental
+    protected $keyType = 'int'; // Tipo de la clave primaria (int, string
     //3 definir campos que se pueden asignar masivamente (crud)
-    protected $fillable = ['fk_usuario','fk_libro','fecha_devolucion', 'fecha_entrega','estado'];
+    public $timestamps = false;
+
+    protected $fillable = ['fk_usuario','fk_libro','fecha_entrega', 'fecha_devolucion','estado'];
 
 public function usuario()
     {

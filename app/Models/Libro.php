@@ -11,6 +11,8 @@ class Libro extends Model
 
     protected $table = 'libro'; // Nombre de tu tabla en MySQL
     protected $primaryKey = 'id_libro';
+
+    public $timestamps = false;
     
     // Campos que permitimos llenar
     protected $fillable = ['titulo', 'fk_categoria', 'fk_autor', 'stock'];

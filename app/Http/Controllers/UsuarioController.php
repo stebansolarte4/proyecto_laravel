@@ -17,7 +17,10 @@ class UsuarioController extends Controller
     /*if (Auth::user()->fk_rol != 1) {
             return redirect()->route('libros.index')->with('error', 'No tienes permiso para ver esta sección.');
         }*/
+<<<<<<< HEAD
 
+=======
+>>>>>>> 545b4a53afbec8cff496db263b129d6f8bc3eb6e
         $usuarios = Usuario::with('rol')->get();
         return view('administradores.usuarios.index', compact('usuarios'));
     }
@@ -34,24 +37,22 @@ class UsuarioController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nombre' => 'required',
-            'correo' => 'required|correo|unique:usuarios,correo',
-            'password' => 'required|min:6',
-            'fk_rol' => 'required'
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'nombre' => 'required|max:255',
+        'correo' => 'required|correo|unique:usuario,correo', // Usando 'usuario' en singular si es necesario
+        'password' => 'required|min:8',
+    ]);
 
-        Usuario::create([
-            'nombre' => $request->nombre,
-            'correo' => $request->correo,
-            'password' => bcrypt($request->password),
-            'fk_rol' => $request->fk_rol
-        ]);
+    Usuario::create([
+        'nombre' => $request->nombre,
+        'correo' => $request->correo,
+        'password' => bcrypt($request->password),
+    ]);
 
-        return redirect()->route('usuarios.index')->with('success', 'Usuario creado exitosamente');
-    }
+    return redirect()->route('usuarios.index')->with('success', 'Usuario creado con éxito');
+}
 
     /**
      * Display the specified resource.

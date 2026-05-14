@@ -32,6 +32,7 @@
         </div>
 
         <button type="submit" class="btn" style="background: #fbbf24; color: black; width: 100%; border: none; padding: 12px;">Actualizar Libro</button>
+        <button type="submit" style="background:none; border:none; cursor:pointer;" onclick="return confirm('¿Salir?')">❌</button>
     </form>
 </div>
 @endsection
