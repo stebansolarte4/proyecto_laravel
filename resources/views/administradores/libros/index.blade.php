@@ -1,7 +1,13 @@
 @extends('layouts.app')
 
+
 @section('content')
 <div class="container" style="padding: 20px;">
+
+ 
+@section('content')
+<div class="container" style="padding: 20px;">
+ 
 
     {{-- Encabezado --}}
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
@@ -13,10 +19,17 @@
         @endif
     </div>
 
+
+
+ 
+
     {{-- Buscador o Filtros (Opcional pero recomendado) --}}
     <div style="margin-bottom: 25px;">
         <input type="text" placeholder="Buscar por título o autor..." style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; outline: none;">
     </div>
+
+
+ 
 
     {{-- Tabla de Libros --}}
     <div class="card" style="background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);">
@@ -60,11 +73,17 @@
                             {{-- Aquí podrías poner un botón de eliminar si lo necesitas --}}
                         </td>
                     @endif
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="5" style="text-align: center; padding: 40px; color: #94a3b8;">
+                        No hay libros registrados en la base de datos.
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+ 
 </div>
 @endsection

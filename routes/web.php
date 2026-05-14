@@ -7,6 +7,8 @@ use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AutorController;
  
+ 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -40,5 +42,8 @@ Route::resource('autores', AutorController::class);
 Route::get('/autores/{id}/editar', [AutorController::class, 'edit'])->name('autores.edit');
 Route::delete('/autores/{id}', [AutorController::class, 'destroy'])->name('autores.destroy');
  
+
 require __DIR__.'/auth.php';
  
+
+
