@@ -2,11 +2,15 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+<<<<<<< HEAD
 use App\Http\Controllers\LibroController;
 use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\AutorController;
 use App\Http\Controllers\CategoriaController;
+=======
+use App\Http\Controllers\AdministradorController;
+>>>>>>> 4061f1998570efb8b7115ce0d617182f665e376c
 
 Route::get('/', function () {
     return view('welcome');
