@@ -1,8 +1,8 @@
 @extends('layouts.app')
-
+ 
 @section('content')
 <div class="container" style="padding: 20px;">
-    
+
     {{-- Encabezado --}}
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h2 style="font-weight: 700; color: #1e293b;">Mis Préstamos</h2>
@@ -16,13 +16,13 @@
             <h3 style="margin: 0; font-size: 2rem;">{{ $prestamos->where('estado', 'activo')->count() }}</h3>
             <p style="margin: 0; opacity: 0.9;">Préstamos Activos</p>
         </div>
-
+ 
         <div style="background: #ef4444; color: white; padding: 25px; border-radius: 12px;">
             <div style="font-size: 1.2rem; margin-bottom: 5px;">⚠️</div>
             <h3 style="margin: 0; font-size: 2rem;">{{ $prestamos->where('estado', 'mora')->count() }}</h3>
             <p style="margin: 0; opacity: 0.9;">Préstamos Vencidos</p>
         </div>
-
+ 
         <div style="background: #10b981; color: white; padding: 25px; border-radius: 12px;">
             <div style="font-size: 1.2rem; margin-bottom: 5px;">✅</div>
             <h3 style="margin: 0; font-size: 2rem;">{{ $prestamos->where('estado', 'devuelto')->count() }}</h3>

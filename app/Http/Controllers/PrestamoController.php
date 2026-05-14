@@ -41,7 +41,7 @@ class PrestamoController extends Controller
 
         $libros = Libro::where('stock', '>', 0)->get(); // Solo libros disponibles
         $usuarios = Usuario::all();
-        return view('admin.prestamos.create', compact('libros', 'usuarios'));
+        return view('administradores.prestamos.create', compact('libros', 'usuarios'));
     }
 public function store(Request $request)
 {

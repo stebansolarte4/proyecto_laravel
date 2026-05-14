@@ -17,6 +17,10 @@ class UsuarioController extends Controller
     /*if (Auth::user()->fk_rol != 1) {
             return redirect()->route('libros.index')->with('error', 'No tienes permiso para ver esta sección.');
         }*/
+<<<<<<< HEAD
+=======
+
+>>>>>>> c5374868bd29048f2d4e2c6316e559178634a5d5
         $usuarios = Usuario::with('rol')->get();
         return view('administradores.usuarios.index', compact('usuarios'));
     }
