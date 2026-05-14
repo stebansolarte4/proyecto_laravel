@@ -14,12 +14,12 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-    if (Auth::user()->fk_rol != 1) {
+    /*if (Auth::user()->fk_rol != 1) {
             return redirect()->route('libros.index')->with('error', 'No tienes permiso para ver esta sección.');
-        }
+        }*/
 
         $usuarios = Usuario::with('rol')->get();
-        return view('admin.usuarios.index', compact('usuarios'));
+        return view('administradores.usuarios.index', compact('usuarios'));
     }
 
     /**
@@ -28,7 +28,7 @@ class UsuarioController extends Controller
     public function create()
     {
         $roles = Rol::all();
-        return view('admin.usuarios.create', compact('roles'));
+        return view('administradores.usuarios.create', compact('roles'));
     }
 
     /**
@@ -68,7 +68,7 @@ class UsuarioController extends Controller
     {
         $usuario = Usuario::findOrFail($id);
         $roles = Rol::all();
-        return view('admin.usuarios.edit', compact('usuario', 'roles'));
+        return view('administradores.usuarios.edit', compact('usuario', 'roles'));
     }
 
     /**
