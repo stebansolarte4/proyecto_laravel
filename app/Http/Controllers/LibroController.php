@@ -13,11 +13,25 @@ class LibroController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $libros = Libro::with(['autor', 'categoria'])->get();
-        return view('administradores.libros.index', compact('libros'));
+     $buscar = $request->get('search');
+
+   $query = Libro::with(['autor', 'categoria']);
+
+    // Si el usuario escribió algo, filtramos
+    if ($buscar) {
+        $query->where('titulo', 'LIKE', '%' . $buscar . '%')
+              ->orWhereHas('autor', function($q) use ($buscar) {
+                  $q->where('nombre_autor', 'LIKE', '%' . $buscar . '%');
+              });
     }
+
+    // Obtenemos los resultados finales (ya sea filtrados o todos)
+    $libros = $query->get();
+
+    return view('administradores.libros.index', compact('libros'));
+}
 
     /**
      * Show the form for creating a new resource.

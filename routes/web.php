@@ -24,16 +24,17 @@ Route::middleware('auth')->group(function () {
 });
  
  
-Route::get('/libros', [LibroController::class, 'index'])->name('libros.index');
+Route::get('/libros', [LibroController::class, 'index'])->name('libros.index')->middleware('auth');
 Route::get('/libros/{id}/editar', [LibroController::class, 'edit'])->name('libros.edit');
+Route::get('/libros', [LibroController::class, 'index'])->name('libros.index')->middleware('auth');
 Route::put('/libros/{id}', [LibroController::class, 'update'])->name('libros.update');
 Route::delete('/libros/{id}', [LibroController::class, 'destroy'])->name('libros.destroy');
  
 Route::get('/prestamos', [PrestamoController::class, 'index'])->name('prestamos.index');
 Route::get('/prestamos/crear', [PrestamoController::class, 'create'])->name('prestamos.create');
-Route::post('/prestamos', [PrestamoController::class, 'store'])->name('prestamos.store');
- 
- 
+Route::post('/prestamos', [PrestamoController::class, 'store'])->name('prestamos.store')->middleware('auth');
+Route::patch('/prestamos/{id}', [PrestamoController::class, 'update'])->name('prestamos.update');
+
 Route::resource('usuarios', UsuarioController::class);
 Route::get('/usuarios/crear', [UsuarioController::class, 'create'])->name('usuarios.create');
 Route::get('/usuarios/{id}', [UsuarioController::class, 'show'])->name('usuarios.show');
