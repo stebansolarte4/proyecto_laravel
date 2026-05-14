@@ -27,6 +27,23 @@
         
         .btn { padding: 8px 16px; border-radius: 6px; text-decoration: none; font-weight: 500; cursor: pointer; }
         .btn-add { background: var(--primary); color: white; border: none; }
+        .logout-btn{
+    width: 100%;
+    margin-top: 20px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: #ef4444;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.logout-btn:hover{
+    background: #dc2626;
+}
     </style>
 </head>
 <body>
@@ -37,7 +54,19 @@
             <a href="{{ route('prestamos.index') }}" class="nav-link {{ request()->is('admin/prestamos*') ? 'active' : '' }}">🤝 Préstamos</a>
             <a href="{{ route('usuarios.index') }}" class="nav-link {{ request()->is('admin/usuarios*') ? 'active' : '' }}">👥 Usuarios</a>
             <a href="{{ route('autores.index') }}" class="nav-link {{ request()->is('admin/autores*') ? 'active' : '' }}">✍️ Autores</a>
-        </nav>
+
+             <!-- BOTÓN CERRAR SESIÓN -->
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+
+        <button type="submit" class="logout-btn">
+            🚪 Cerrar Sesión
+        </button>
+    </form>
+
+</nav>
+            
+
     </aside>
 
     <main class="main">

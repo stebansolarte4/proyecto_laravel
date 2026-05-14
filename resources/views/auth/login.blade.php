@@ -214,9 +214,20 @@
         <a href="#">¿Olvidaste tu contraseña?</a>
       </div>
 
+    
+
       <button type="submit" class="btn">
-        Iniciar Sesión
-      </button>
+  Iniciar Sesión
+</button>
+
+<form action="{{ route('logout') }}" method="POST">
+  @csrf
+  <button type="submit" class="logout-btn">
+    Cerrar Sesión
+  </button>
+</form>
+
+    
 
     </form>
 

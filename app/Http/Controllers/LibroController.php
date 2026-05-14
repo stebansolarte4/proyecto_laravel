@@ -16,7 +16,7 @@ class LibroController extends Controller
     public function index()
     {
         $libros = Libro::with(['autor', 'categoria'])->get();
-        return view('admin.libros.index', compact('libros'));
+        return view('administradores.libros.index', compact('libros'));
     }
 
     /**
@@ -26,7 +26,7 @@ class LibroController extends Controller
     {
         $autores = Autor::all();
         $categorias = Categoria::all();
-        return view('admin.libros.create', compact('autores', 'categorias'));
+        return view('administradores.libros.create', compact('autores', 'categorias'));
     }
 
     /**
@@ -65,7 +65,7 @@ if (Auth::user()->fk_rol != 1) {
     public function show(string $id)
     {
         $libro = Libro::findOrFail($id);
-        return view('admin.libros.show', compact('libro'));
+        return view('administradores.libros.show', compact('libro'));
     }
 
     /**
@@ -76,7 +76,7 @@ if (Auth::user()->fk_rol != 1) {
         $libro = Libro::findOrFail($id);
         $autores = Autor::all();
         $categorias = Categoria::all();
-        return view('admin.libros.edit', compact('libro', 'autores', 'categorias'));
+        return view('administradores.libros.edit', compact('libro', 'autores', 'categorias'));
     }
     
 
