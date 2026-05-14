@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Gestión de Usuarios')
 
 @section('content')
 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">

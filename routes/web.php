@@ -35,6 +35,9 @@ Route::post('/prestamos', [PrestamoController::class, 'store'])->name('prestamos
  
  
 Route::resource('usuarios', UsuarioController::class);
+Route::get('/usuarios/crear', [UsuarioController::class, 'create'])->name('usuarios.create');
+Route::get('/usuarios/{id}', [UsuarioController::class, 'show'])->name('usuarios.show');
+Route::put('/usuarios/{id}', [UsuarioController::class, 'update'])->name('usuarios.update');
 Route::get('/usuarios/{id}/editar', [UsuarioController::class, 'edit'])->name('usuarios.edit');
 Route::delete('/usuarios/{id}', [UsuarioController::class, 'destroy'])->name('usuarios.destroy');
  

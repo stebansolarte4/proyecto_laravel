@@ -14,12 +14,11 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-    if (Auth::user()->fk_rol != 1) {
+    /*if (Auth::user()->fk_rol != 1) {
             return redirect()->route('libros.index')->with('error', 'No tienes permiso para ver esta sección.');
-        }
-
+        }*/
         $usuarios = Usuario::with('rol')->get();
-        return view('admin.usuarios.index', compact('usuarios'));
+        return view('administradores.usuarios.index', compact('usuarios'));
     }
 
     /**
@@ -28,30 +27,28 @@ class UsuarioController extends Controller
     public function create()
     {
         $roles = Rol::all();
-        return view('admin.usuarios.create', compact('roles'));
+        return view('administradores.usuarios.create', compact('roles'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nombre' => 'required',
-            'correo' => 'required|correo|unique:usuarios,correo',
-            'password' => 'required|min:6',
-            'fk_rol' => 'required'
-        ]);
+   public function store(Request $request)
+{
+    $request->validate([
+        'nombre' => 'required|max:255',
+        'correo' => 'required|correo|unique:usuario,correo', // Usando 'usuario' en singular si es necesario
+        'password' => 'required|min:8',
+    ]);
 
-        Usuario::create([
-            'nombre' => $request->nombre,
-            'correo' => $request->correo,
-            'password' => bcrypt($request->password),
-            'fk_rol' => $request->fk_rol
-        ]);
+    Usuario::create([
+        'nombre' => $request->nombre,
+        'correo' => $request->correo,
+        'password' => bcrypt($request->password),
+    ]);
 
-        return redirect()->route('usuarios.index')->with('success', 'Usuario creado exitosamente');
-    }
+    return redirect()->route('usuarios.index')->with('success', 'Usuario creado con éxito');
+}
 
     /**
      * Display the specified resource.
@@ -68,7 +65,7 @@ class UsuarioController extends Controller
     {
         $usuario = Usuario::findOrFail($id);
         $roles = Rol::all();
-        return view('admin.usuarios.edit', compact('usuario', 'roles'));
+        return view('administradores.usuarios.edit', compact('usuario', 'roles'));
     }
 
     /**
