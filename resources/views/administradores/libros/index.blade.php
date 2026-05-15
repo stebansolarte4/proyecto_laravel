@@ -17,7 +17,7 @@
 
    {{-- Buscador con Botón --}}
 <div style="margin-bottom: 25px;">
-    <form action="{{ route('libros.index') }}" method="POST" style="display: flex; gap: 10px;">
+    <form action="{{ route('libros.index') }}" method="GET" style="display: flex; gap: 10px;">
         <input type="text" 
                name="search" 
                value="{{ request('search') }}" 
