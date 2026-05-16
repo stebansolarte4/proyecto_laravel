@@ -198,7 +198,7 @@
 
             <div class="input-group">
                 <label>Correo electrónico</label>
-                <input type="email" name="email" placeholder="ejemplo@correo.com" required>
+                <input type="email" name="correo" placeholder="ejemplo@correo.com" required>
             </div>
 
             <div class="input-group">

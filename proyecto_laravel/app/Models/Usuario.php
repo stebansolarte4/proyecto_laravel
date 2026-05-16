@@ -3,17 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
-// app/Models/Usuario.php
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Usuario extends Authenticatable
 {
-    protected $table = 'usuarios'; // Asegúrate de que coincida con el nombre en tu DB
-    
-    // Si tu llave primaria se llama 'id_usuario' en la DB:
+    // Tu tabla en la DB se llama 'usuario' en singular según tu script SQL
+    protected $table = 'usuario'; 
     protected $primaryKey = 'id_usuario'; 
-
-    // IMPORTANTE: Si en tu tabla NO tienes 'created_at' y 'updated_at'
     public $timestamps = false; 
 
     protected $fillable = [
@@ -22,4 +18,28 @@ class Usuario extends Authenticatable
         'password', 
         'fk_rol'
     ];
+
+    /**
+     * Relación con el modelo Rol
+     */
+    public function rol(): BelongsTo
+    {
+        return $this->belongsTo(Rol::class, 'fk_rol', 'id_rol');
+    }
+
+    /**
+     * Indicarle a Laravel que el campo de login es 'correo'
+     */
+    public function getAuthIdentifierName()
+    {
+        return 'correo';
+    }
+
+    /**
+     * Indicarle a Laravel cuál es la columna de la contraseña
+     */
+    public function getAuthPassword()
+    {
+        return $this->password;
+    }
 }

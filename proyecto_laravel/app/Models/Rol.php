@@ -15,6 +15,8 @@ class Rol extends Model
     //3 definir campos que se pueden asignar masivamente (crud)
     protected $fillable = ['nombre_rol'];
 
+    public $timestamps = false;
+
     public function usuarios()
     {
         return $this->hasMany(Usuario::class, 'fk_rol', 'id_rol');

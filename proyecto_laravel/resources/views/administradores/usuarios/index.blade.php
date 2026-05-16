@@ -5,7 +5,6 @@
 @section('content')
 
 <style>
-
     body{
         background: linear-gradient(135deg, #4b2e05, #8b5e34, #d4a373);
         min-height: 100vh;
@@ -140,24 +139,38 @@
         font-size: 18px;
     }
 
+    .alert-success {
+        background: #dcfce7;
+        color: #14532d;
+        border: 1px solid #bbf7d0;
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
 </style>
 
 <div class="usuarios-container">
 
+    {{-- Cartelera de avisos cuando todo sale melo --}}
+    @if(session('success'))
+        <div class="alert-success">
+            ✅ {{ session('success') }}
+        </div>
+    @endif
+
     <div class="usuarios-card">
 
         <div class="header-usuarios">
-
             <h1>📚 Usuarios del Sistema</h1>
-
+            
+            {{-- Un solo botón de agregar, limpio y elegante --}}
             <a href="{{ route('usuarios.create') }}" class="btn-add">
                 + Nuevo Usuario
             </a>
-
         </div>
 
         <table>
-
             <thead>
                 <tr>
                     <th>Nombre</th>
@@ -168,11 +181,8 @@
             </thead>
 
             <tbody>
-
                 @foreach($usuarios as $usuario)
-
                 <tr>
-
                     <td>
                         <strong>{{ $usuario->nombre }}</strong>
                     </td>
@@ -182,77 +192,49 @@
                     </td>
 
                     <td>
-
                         @php
-
-                            if($usuario->fk_rol == 1){
-                                $roleClass = 'role-admin';
-                                $roleText = 'Administrador';
-                            }
-                            elseif($usuario->fk_rol == 2){
-                                $roleClass = 'role-estudiante';
-                                $roleText = 'Estudiante';
-                            }
-                            elseif($usuario->fk_rol == 3){
-                                $roleClass = 'role-profesor';
-                                $roleText = 'Profesor';
-                            }
-                            else{
-                                $roleClass = 'role-bibliotecario';
-                                $roleText = 'Bibliotecario';
-                            }
-
+                            // Mapeo corregido según los IDs de tu DB (1=Biblio, 2=Profe, 3=Estudiante, 4=Admin)
+                            $classes = [
+                                1 => 'role-Administrador',
+                                2 => 'role-Bibliotecario',
+                                3 => 'role-Profesor',
+                                4 => 'role-estudiante'
+                            ];
+                            $class = $classes[$usuario->fk_rol] ?? 'role-estudiante';
                         @endphp
 
-                        <span class="role-label {{ $roleClass }}">
-                            {{ $roleText }}
+                        <span class="role-label {{ $class }}">
+                            {{ $usuario->rol->nombre_rol ?? 'Sin Rol' }}
                         </span>
-
                     </td>
 
                     <td>
-
                         <div class="acciones">
-
-                            <a 
-                                href="{{ route('usuarios.edit', $usuario->id_usuario) }}"
-                                class="btn-icon"
-                            >
+                            {{-- Botón de Editar --}}
+                            <a href="{{ route('usuarios.edit', $usuario->id_usuario) }}" class="btn-icon">
                                 ✏️
                             </a>
 
-                            <form 
-                                action="{{ route('usuarios.destroy', $usuario->id_usuario) }}"
-                                method="POST"
-                            >
-
+                            {{-- Formulario de Eliminar bien cerrado --}}
+                            <form action="{{ route('usuarios.destroy', $usuario->id_usuario) }}" method="POST" style="margin: 0;">
                                 @csrf
                                 @method('DELETE')
-
+                                
                                 <button 
                                     type="submit"
                                     class="btn-delete"
-                                    onclick="return confirm('¿Eliminar este usuario?')"
+                                    onclick="return confirm('¿De verdad queeres eliminar este usuario?')"
                                 >
                                     🗑️
                                 </button>
-
                             </form>
-
                         </div>
-
                     </td>
-
                 </tr>
-
                 @endforeach
-
             </tbody>
-
         </table>
-
     </div>
-
 </div>
 
 @endsection

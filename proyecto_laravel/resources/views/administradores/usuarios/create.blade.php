@@ -135,7 +135,7 @@
 
             <input 
                 type="email"
-                name="email"
+                name="correo"
                 id="email"
                 class="form-control"
                 placeholder="ejemplo@correo.com"
@@ -161,24 +161,23 @@
                 Rol del Usuario
             </label>
 
-            <select name="rol" id="rol" class="form-select" required>
+            <select name="fk_rol" id="rol" class="form-select" required>
 
                 <option value="">
                     Seleccione un rol
                 </option>
+                @foreach($roles as $rol)
 
-                <option value="bibliotecario">
-                    📖 Bibliotecario
+                <option value="{{ $rol->id_rol }}" {{ old('fk_rol') == $rol->id_rol ? 'selected' : '' }}>
+
+                @if($rol->id_rol == 1) 📖
+                @elseif($rol->id_rol == 2) 👨‍🏫
+                @elseif($rol->id_rol == 3) 🎓
+                @endif
+                {{ $rol->nombre_rol }}
                 </option>
 
-                <option value="estudiante">
-                    🎓 Estudiante
-                </option>
-
-                <option value="profesor">
-                    👨‍🏫 Profesor
-                </option>
-
+                @endforeach
             </select>
 
             <!-- Botón -->
