@@ -1,0 +1,111 @@
+CREATE DATABASE biblioteca_web;
+USE biblioteca_web;
+ 
+--  Tabla de Roles (Para definir permisos)
+CREATE TABLE rol (
+    id_rol INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_rol VARCHAR(50) NOT NULL UNIQUE
+);
+ 
+-- 2. Tabla de Categorías (Independiente)
+CREATE TABLE categoria (
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_categoria VARCHAR(50) NOT NULL UNIQUE
+);
+ 
+-- 3. Tabla de Autores (Independiente)
+CREATE TABLE autor (
+    id_autor INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_autor VARCHAR(100) NOT NULL
+);
+ 
+-- 4. Tabla de Usuarios (Depende de rol)
+CREATE TABLE usuario (
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    fk_rol INT,
+    FOREIGN KEY (fk_rol) REFERENCES rol(id_rol)
+);
+ 
+-- 5. Tabla de Administradores (Depende de rol)
+CREATE TABLE administrador (
+    id_admin INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    fk_rol INT,
+    FOREIGN KEY (fk_rol) REFERENCES rol(id_rol)
+);
+ 
+-- 6. Tabla de Libros (Depende de categoria y autor)
+CREATE TABLE libro (
+    id_libro INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(150) NOT NULL,
+    fk_categoria INT,
+    fk_autor INT,
+    stock INT DEFAULT 1,
+    FOREIGN KEY (fk_categoria) REFERENCES categoria(id_categoria) ON DELETE SET NULL,
+    FOREIGN KEY (fk_autor) REFERENCES autor(id_autor) ON DELETE SET NULL
+);
+
+drop table libro;
+ 
+-- 7. Tabla de Préstamos (Depende de usuario, libro y administrador)
+CREATE TABLE prestamo (
+    id_prestamo INT AUTO_INCREMENT PRIMARY KEY,
+    fk_usuario INT,
+    fk_libro INT,
+    fecha_devolucion DATE NOT NULL,
+    fecha_entrega DATETIME NULL,
+    estado ENUM ('activo', 'devuelto', 'mora') DEFAULT 'activo',
+    FOREIGN KEY (fk_usuario) REFERENCES usuario(id_usuario),
+    FOREIGN KEY (fk_libro) REFERENCES libro(id_libro)
+);
+-- Inserción de Datos (El orden importa)
+-- SQL
+-- Primero los ROLES (incluyendo 9 y 10 para tus administradores)
+INSERT INTO rol (nombre_rol) VALUES
+('Administrador'), ('Bibliotecario'), ('Profesor'), ('Estudiante');
+ 
+-- Categorías y Autores
+INSERT INTO categoria (nombre_categoria) VALUES
+('Poesía'), ('Teatro'), ('Cuento'), ('Química'), ('Biología'), ('Física'), ('Novelas'),
+('Historia Universal'), ('Álgebra'), ('Cálculo'), ('Filosofía'), ('Ídiomas');
+ 
+INSERT INTO autor (nombre_autor) VALUES
+('Pablo Neruda'), ('Rubén Darío'), ('William Shakespeare'), ('Julio Cortazar'), 
+('Dimitri Mendeléyev'), ('Charles Darwin'), ('Albert Einstein'), ('Isaac Newton'),
+('GabrielGarcía Marquéz'), ('Eric Hobsbawm'), ('René Descarted'), ('Socrates'),
+('Aristoteles'), ('Platón');
+ 
+-- Usuarios y Administradores (Ya existen los roles, así que no habrá error)
+INSERT INTO administrador (username, password, fk_rol) VALUES
+('baysal', 'pas123', 1), ('dancri', 'pas123', 1), ('mayerquin', 'pas123', 1);
+
+INSERT INTO usuario (nombre, correo, password, fk_rol) VALUES
+('Andrés Felipe', 'andres@email.com', 'user123', 4),
+('Beatriz Solano', 'beatriz@email.com', 'user123', 2),
+('Carlos Alberto', 'carlbert@email.com', 'user123', 3);
+ 
+-- Libros (Se crean con IDs 1 al 10)
+INSERT INTO libro (titulo, fk_categoria, fk_autor, stock) VALUES
+('20 Poemas de amor y una cancion deseperada', 1, 1, 4),
+('Hamlet', 2, 3, 5),
+('Bestiario', 3, 4, 8),
+('Principios de la Química', 4, 8, 5),
+('El origen de las Especies', 5, 6, 10),
+('Relatividad Teoria especial y general', 6, 7, 5),
+('Cien años de soledad', 7, 9, 8),
+('La era de las Revoluciones', 8, 10, 6),
+('La républica', 11, 14, 9),
+('Lingüistíca General', 12, 11, 3),
+('Algébra moderna', 9, 12, 3),
+('Ética a nicomaco', 11, 13, 3),
+('Lingüistíca General', 12, 11, 3),
+('Cálculo Diferencial', 10, 5, 3);
+ 
+-- Préstamos (Usando IDs 1 al 10 para libros)
+INSERT INTO prestamo (fk_usuario, fk_libro, fecha_devolucion, estado) VALUES
+(1, 1, '2026-05-011', 'devuelto'),
+(3, 2, '2026-05-09', 'activo');
