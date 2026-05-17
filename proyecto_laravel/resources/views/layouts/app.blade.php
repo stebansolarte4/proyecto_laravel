@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-
         *{
             margin: 0;
             padding: 0;
@@ -33,7 +32,6 @@
         }
 
         /* SIDEBAR */
-
         .sidebar{
             width: 280px;
             min-height: 100vh;
@@ -98,7 +96,6 @@
         }
 
         /* BOTÓN LOGOUT */
-
         .logout-btn{
             width: 100%;
             padding: 14px;
@@ -119,7 +116,6 @@
         }
 
         /* CONTENIDO */
-
         .main{
             margin-left: 280px;
             flex: 1;
@@ -136,7 +132,6 @@
         }
 
         /* TABLAS */
-
         table{
             width: 100%;
             border-collapse: collapse;
@@ -173,7 +168,6 @@
         }
 
         /* BOTONES */
-
         .btn{
             padding: 10px 18px;
             border-radius: 12px;
@@ -194,10 +188,29 @@
             transform: scale(1.03);
         }
 
+        /* 👑 NUEVAS ALERTAS GLOBALES CORREGIDAS AQUÍ */
+        .global-alert {
+            background: #dcfce7;
+            color: #14532d;
+            border: 1px solid #bbf7d0;
+            padding: 15px 20px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    
+        .global-alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+
         /* RESPONSIVE */
-
         @media(max-width: 900px){
-
             .sidebar{
                 width: 100%;
                 height: auto;
@@ -213,31 +226,21 @@
             body{
                 flex-direction: column;
             }
-
         }
-
     </style>
-
 </head>
 
 <body>
 
-    <!-- SIDEBAR -->
-
     <aside class="sidebar">
-
         <div>
-
             <div class="logo">
                 <div style="font-size: 55px;">📚</div>
-
                 <h2>INMACLOUD</h2>
-
                 <p>Inmaculada Concepción</p>
             </div>
 
             <nav class="nav-links">
-
                 <a href="{{ route('libros.index') }}" 
                    class="nav-link {{ request()->is('admin/libros*') ? 'active' : '' }}">
                     📚 Libros
@@ -257,33 +260,38 @@
                    class="nav-link {{ request()->is('admin/autores*') ? 'active' : '' }}">
                     ✍️ Autores
                 </a>
-
             </nav>
-
         </div>
-
-        <!-- BOTÓN CERRAR SESIÓN -->
 
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-
             <button type="submit" class="logout-btn">
                 🚪 Cerrar Sesión
             </button>
         </form>
-
     </aside>
 
-    <!-- CONTENIDO -->
-
     <main class="main">
-
         <div class="content-card">
+            
+            {{-- Mensaje de Éxito Global --}}
+            @if(session('success'))
+                <div class="global-alert">
+                    ✅ {{ session('success') }}
+                </div>
+            @endif
 
+            {{-- Mensaje de Error Global --}}
+            @if(session('error'))
+                <div class="global-alert global-alert-error">
+                    ❌ {{ session('error') }}
+                </div>
+            @endif
+
+            {{-- Aquí se renderizan tus vistas hijas (index, create, edit, etc.) --}}
             @yield('content')
 
         </div>
-
     </main>
 
 </body>

@@ -152,13 +152,6 @@
 
 <div class="usuarios-container">
 
-    {{-- Cartelera de avisos cuando todo sale melo --}}
-    @if(session('success'))
-        <div class="alert-success">
-            ✅ {{ session('success') }}
-        </div>
-    @endif
-
     <div class="usuarios-card">
 
         <div class="header-usuarios">
